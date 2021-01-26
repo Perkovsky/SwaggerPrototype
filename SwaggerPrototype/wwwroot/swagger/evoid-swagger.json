@@ -1,0 +1,299 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Evoid API with AWS API Gateway integration for mobile app.",
+    "version": "0.0.3",
+    "title": "Evoid API"
+  },
+  "host": "447o5tanv5.execute-api.us-west-2.amazonaws.com",
+  "basePath": "/UAT",
+  "schemes": [
+    "https"
+  ],
+  "paths": {
+    "/api/dictionaries/instruments": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "marketIds",
+            "in": "query",
+            "description": "comma separated list of Ids (e.g ?marketIds=uuid1,uuid2...)",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "ids",
+            "in": "query",
+            "description": "comma separated list of Ids (e.g ?ids=uuid1,uuid2...)",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/ArrayOfInstrument"
+            }
+          }
+        }
+      }
+    },
+    "/api/dictionaries/instruments/{id}/available-dates": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "from",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "to",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/AvailableDates"
+            }
+          }
+        }
+      }
+    },
+    "/api/dictionaries/markets": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/ArrayOfMarket"
+            }
+          },
+          "401": {
+            "description": "401 response"
+          },
+          "500": {
+            "description": "500 response"
+          }
+        }
+      }
+    },
+    "/api/dictionaries/terms": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "marketIds",
+            "in": "query",
+            "description": "comma separated list of Ids (e.g ?marketIds=uuid1,uuid2...)",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "ids",
+            "in": "query",
+            "description": "comma separated list of Ids (e.g ?ids=uuid1,uuid2...)",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/ArrayOfTerm"
+            }
+          }
+        }
+      }
+    },
+    "/api/market-data": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "customControl",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "date",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "instrumentId",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "marketIds",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/ArrayOfMarketData"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "ArrayOfMarketData": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/MarketData"
+      }
+    },
+    "ArrayOfMarket": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Market"
+      }
+    },
+    "ArrayOfInstrument": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Instrument"
+      }
+    },
+    "MarketData": {
+      "type": "object",
+      "properties": {
+        "marketDataId": {
+          "type": "string"
+        },
+        "marketId": {
+          "type": "string"
+        },
+        "marketName": {
+          "type": "string"
+        },
+        "termId": {
+          "type": "string"
+        },
+        "instrumentId": {
+          "type": "string"
+        },
+        "instrumentSourceId": {
+          "type": "string"
+        },
+        "price_ts": {
+          "type": "string"
+        },
+        "buisiness_date": {
+          "type": "string"
+        },
+        "price_side": {
+          "type": "string"
+        },
+        "price_type": {
+          "type": "string"
+        },
+        "price": {
+          "type": "string"
+        },
+        "tickerId": {
+          "type": "string"
+        }
+      }
+    },
+    "Instrument": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "marketId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "AvailableDates": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "ArrayOfTerm": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Term"
+      }
+    },
+    "Term": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "name": {
+          "type": "string"
+        },
+        "instrumentId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "instrumentSourceId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "instrumentSourceTermId": {
+          "type": "string",
+          "format": "uuid"
+        }
+      }
+    },
+    "Market": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
